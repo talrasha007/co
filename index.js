@@ -14,7 +14,7 @@ var slice = Array.prototype.slice;
  * setImmediate() with fallback to process.nextTick() for node v0.8.x.
  */
 
-var setImmediate = global.setImmediate || process.nextTick;
+var setImmediate = process.nextTick;
 
 /**
  * Expose `co`.
@@ -59,7 +59,7 @@ function co(fn) {
     // wrap the callback in a setImmediate
     // so that any of its errors aren't caught by `co`
     function exit(err, res) {
-      setImmediate(done.bind(ctx, err, res));
+      setImmediate(function () { done.call(ctx, err, res); });
     }
 
     function next(err, res) {
