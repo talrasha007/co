@@ -6,12 +6,6 @@
 var slice = Array.prototype.slice;
 
 /**
- * setImmediate() with fallback to process.nextTick() for node v0.8.x.
- */
-
-var setImmediate = process.nextTick;
-
-/**
  * Expose `co`.
  */
 
@@ -122,9 +116,6 @@ function co(fn) {
  */
 
 function toThunk(obj, ctx) {
-  if (Array.isArray(obj)) {
-    return objectToThunk.call(ctx, obj);
-  }
 
   if (isGeneratorFunction(obj)) {
     return co(obj.call(ctx));
